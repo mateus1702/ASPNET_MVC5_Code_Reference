@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>ASP.Net MVC</h1>
+    <p class="lead">MVC Bootstrap with a basic CRUD.</p>
+    <p>@Html.ActionLink("Click here to CRUD!", "Index", new { controller = "Task" }, new { @class = "btn btn-primary btn-lg" })</p>
+</div>
