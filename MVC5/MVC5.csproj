@@ -146,11 +146,22 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Helpers.cs" />
+    <Compile Include="Infrastructure\RestClient.cs" />
+    <Compile Include="Models\DTO\TaskDTO.cs" />
+    <Compile Include="Models\DTO\UserDTO.cs" />
+    <Compile Include="Models\Input\TaskInputModel.cs" />
+    <Compile Include="Models\Input\UserInputModel.cs" />
     <Compile Include="Models\Task.cs" />
+    <Compile Include="Models\View\TaskListViewModel.cs" />
+    <Compile Include="Models\View\TaskViewModel.cs" />
+    <Compile Include="Models\View\UserListViewModel.cs" />
+    <Compile Include="Models\View\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -193,9 +204,14 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Task\Create.cshtml" />
     <Content Include="Views\Task\Delete.cshtml" />
-    <Content Include="Views\Task\Details.cshtml" />
-    <Content Include="Views\Task\Edit.cshtml" />
-    <Content Include="Views\Task\Index.cshtml" />
+    <Content Include="Views\User\List.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\User\Read.cshtml" />
+    <Content Include="Views\User\Update.cshtml" />
+    <Content Include="Views\User\Delete.cshtml" />
+    <Content Include="Views\Task\List.cshtml" />
+    <Content Include="Views\Task\Update.cshtml" />
+    <Content Include="Views\Task\Read.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

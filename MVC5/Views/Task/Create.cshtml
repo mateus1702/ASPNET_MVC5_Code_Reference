@@ -1,19 +1,25 @@
-﻿@model MVC5.Models.Task
+﻿@using MVC5.Models
+@using MVC5.Models.Input
+@using MVC5.Infrastructure
+
+@model TaskInputModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Cadastro de tarefa";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
+<h2>Cadastro de tarefa</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
+    @Html.HiddenFor(x => x.UserId)
+
     <div class="form-horizontal">
-        <h4>Task</h4>
+        <h4>Tarefa</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -33,14 +39,6 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Owner, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Owner, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Owner, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.Done, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
@@ -52,14 +50,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Salvar" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Voltar a listagem", "List", new { id = ViewBag.UserId })
 </div>
 
 @section Scripts {

@@ -1,0 +1,50 @@
+﻿@model MVC5.Models.View.TaskListViewModel
+
+@{
+    ViewBag.Title = "Listagem de tarefas de usuário";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Listagem de tarefas do usuário @Model.User.Name</h2>
+
+<h3>
+    Tarefas
+</h3>
+<p>
+    @Html.ActionLink("Cadastrar", "Create", new { id = Model.User.Id })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Tasks[0].Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tasks[0].Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tasks[0].Done)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Tasks)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Done)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Update", new { id = item.Id }) |
+                @Html.ActionLink("Visualizar", "Read", new { id = item.Id }) |
+                @Html.ActionLink("Deletar", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

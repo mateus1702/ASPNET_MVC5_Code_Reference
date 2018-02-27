@@ -1,0 +1,32 @@
+﻿@model MVC5.Models.View.UserViewModel
+
+@{
+    ViewBag.Title = "Deletar usuário";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Remoção de usuário</h2>
+
+<h3>Tem certeza que deseja deletar este usuário?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+    </dl>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Deletar" class="btn btn-default" /> |
+            @Html.ActionLink("Voltar a listagem", "List")
+        </div>
+    }
+</div>

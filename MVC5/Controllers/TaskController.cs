@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Configuration;
+using MVC5.Models.DTO;
+using MVC5.Models.View;
+using MVC5.Models.Input;
 
 namespace MVC5.Controllers
 {
@@ -14,99 +17,106 @@ namespace MVC5.Controllers
     {
         string baseUrl = ConfigurationManager.AppSettings["serviceBaseURL"];
 
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> List(int id)
         {
             RESTClient client = new RESTClient(baseUrl);
 
-            var response = await client.Get<IEnumerable<Models.Task>>("api/Task");
+            var user = await client.Get<UserDTO>($"api/user/{id}");
+            var tasks = await client.Get<IEnumerable<TaskDTO>>($"api/taskfromuser/{id}");
 
-            return View(response);
+            return View(new TaskListViewModel(user, tasks));
         }
 
-        // GET: Test/Details/5
-        public async Task<ActionResult> Details(int id)
+        public async Task<ActionResult> Read(int id)
         {
             RESTClient client = new RESTClient(baseUrl);
 
-            var response = await client.Get<Models.Task>($"api/Task/{id}");
+            var dto = await client.Get<TaskDTO>($"api/Task/{id}");
 
-            return View(response);
+            ViewBag.UserId = dto.UserId;
+
+            return View(new TaskViewModel(dto));
         }
 
-        // GET: Test/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
-            return View();
+            var input = new TaskInputModel()
+            {
+                UserId = id
+            };
+
+            ViewBag.UserId = id;
+
+            return View(input);
         }
 
-        // POST: Test/Create
         [HttpPost]
-        public async Task<ActionResult> Create(Models.Task model)
+        public async Task<ActionResult> Create(TaskInputModel input)
         {
             try
             {
                 RESTClient client = new RESTClient(baseUrl);
-                await client.PostJson<string>("api/Task", model);
+                await client.PostJson<string>($"api/task", new TaskDTO(input));
 
-                return RedirectToAction("Index");
+                return RedirectToAction("List", new { id = input.UserId });
             }
             catch
             {
-                return View(model);
+                return View(input);
             }
         }
 
-        // GET: Test/Edit/5
-        public async Task<ActionResult> Edit(int id)
+        public async Task<ActionResult> Update(int id)
         {
             RESTClient client = new RESTClient(baseUrl);
 
-            var response = await client.Get<Models.Task>($"api/Task/{id}");
+            var dto = await client.Get<TaskDTO>($"api/task/{id}");
 
-            return View(response);
+            ViewBag.UserId = dto.UserId;
+
+            return View(new TaskInputModel(dto));
         }
 
-        // POST: Test/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(int id, Models.Task model)
+        public async Task<ActionResult> Update(int id, TaskInputModel input)
         {
             try
             {
                 RESTClient client = new RESTClient(baseUrl);
-                await client.PutJson<string>($"api/Task/{id}", model);
+                await client.PutJson<string>($"api/task/{input.Id}", new TaskDTO(input));
 
-                return RedirectToAction("Index");
+                return RedirectToAction("List", new { id = input.UserId });
             }
             catch
             {
-                return View();
+                return View(input);
             }
         }
 
-        // GET: Test/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
             RESTClient client = new RESTClient(baseUrl);
 
-            var response = await client.Get<Models.Task>($"api/Task/{id}");
+            var dto = await client.Get<TaskDTO>($"api/task/{id}");
 
-            return View(response);
+            ViewBag.UserId = dto.UserId;
+
+            return View(new TaskViewModel(dto));
         }
 
-        // POST: Test/Delete/5
         [HttpPost]
-        public async Task<ActionResult> Delete(int id, Models.Task model)
+        public async Task<ActionResult> Delete(int id, TaskViewModel view)
         {
             try
             {
                 RESTClient client = new RESTClient(baseUrl);
                 await client.Delete<string>($"api/Task/{id}");
 
-                return RedirectToAction("Index");
+                return RedirectToAction("List", new { id = view.UserId });
             }
             catch
             {
-                return View();
+                return View(view);
             }
         }
     }

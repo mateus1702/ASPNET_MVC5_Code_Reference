@@ -1,0 +1,64 @@
+﻿@using MVC5.Models
+@using MVC5.Models.Input
+@using MVC5.Infrastructure
+
+@model MVC5.Models.View.UserViewModel
+
+@{
+    ViewBag.Title = "Visualizar usuário";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Visualizar usuário</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>
+            Tarefas
+        </dt>
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Tasks[0].Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Tasks[0].Date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Tasks[0].Done)
+                    </th>
+                </tr>
+
+                @foreach (var item in Model.Tasks)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Done)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Update", new { id = Model.Id }) |
+    @Html.ActionLink("Voltar a listagem", "List")
+</p>
